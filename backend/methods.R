@@ -186,44 +186,44 @@ print(a)
 
 check_available_moves <- function(piece, board) {
   if (piece@piece_type == "pawn" && piece@color == "white") {
-      return(white_pawn_available_moves(piece, board))
+    return(white_pawn_available_moves(piece, board))
   }
   if (piece@piece_type == "pawn" && piece@color == "black") {
-      return(black_pawn_available_moves(piece, board))
+    return(black_pawn_available_moves(piece, board))
   }
   return(piece)
 }
 white_pawn_available_moves <- function(piece, board) {
-    if (piece@moved == FALSE &&
-        board[[piece@col]][[piece@row + 2]] == NULL &&
-        board[[piece@col]][[piece@row + 1]] == NULL) {
-      piece@available_moves <- piece@available_moves |>
-        append(list(col = piece@col, row = piece@row + 2))
-    }
-    if (
-        board[[piece@col]][[piece@row + 1]] == NULL &&
-        piece@row + 1 <= 8) {
-      piece@available_moves <- piece@available_moves |>
-        append(list(col = piece@col, row = piece@row + 1))
-    }
+  if (piece@moved == FALSE &&
+    is.null(board[[piece@col]][[piece@row + 2]]) &&
+    is.null(board[[piece@col]][[piece@row + 1]])) {
+    piece@available_moves <- piece@available_moves |>
+      append(list(list(col = piece@col, row = piece@row + 2)))
+  }
+  if (
+    is.null(board[[piece@col]][[piece@row + 1]]) &&
+      piece@row + 1 <= 8) {
+    piece@available_moves <- piece@available_moves |>
+      append(list(list(col = piece@col, row = piece@row + 1)))
+  }
   return(piece)
 }
 
 black_pawn_available_moves <- function(piece, board) {
-    if (piece@moved == FALSE &&
-        board[[piece@col]][[piece@row - 2]] == NULL &&
-        board[[piece@col]][[piece@row - 1]] == NULL) {
-      piece@available_moves <- piece@available_moves |>
-        append(list(col = piece@col, row = piece@row + 2))
-    }
-    if (
-        board[[piece@col]][[piece@row - 1]] == NULL &&
-        piece@row - 1 >= 1) {
-      piece@available_moves <- piece@available_moves |>
-        append(list(col = piece@col, row = piece@row + 1))
-    }
+  if (piece@moved == FALSE &&
+    is.null(board[[piece@col]][[piece@row - 2]]) &&
+    is.null(board[[piece@col]][[piece@row - 1]])) {
+    piece@available_moves <- piece@available_moves |>
+      append(list(list(col = piece@col, row = piece@row + 2)))
+  }
+  if (
+    is.null(board[[piece@col]][[piece@row - 1]]) &&
+      piece@row - 1 >= 1) {
+    piece@available_moves <- piece@available_moves |>
+      append(list(list(col = piece@col, row = piece@row + 1)))
+  }
   return(piece)
 }
 
-check_available_moves(a[["a"]][[2]], a)
-a[["a"]][[2]]
+a[["a"]][[2]] <- check_available_moves(a[["a"]][[2]], a)
+a[["a"]][[2]]@available_moves
