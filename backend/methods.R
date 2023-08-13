@@ -185,37 +185,45 @@ a <- new_game()
 print(a)
 
 check_available_moves <- function(piece, board) {
-  if (piece@piece_type == "pawn") {
-    ## check for initial 2 square move
+  if (piece@piece_type == "pawn" && piece@color == "white") {
+      return(white_pawn_available_moves(piece, board))
+  }
+  if (piece@piece_type == "pawn" && piece@color == "black") {
+      return(black_pawn_available_moves(piece, board))
+  }
+  return(piece)
+}
+white_pawn_available_moves <- function(piece, board) {
     if (piece@moved == FALSE &&
-        piece@color == "white" &&
         board[[piece@col]][[piece@row + 2]] == NULL &&
         board[[piece@col]][[piece@row + 1]] == NULL) {
       piece@available_moves <- piece@available_moves |>
         append(list(col = piece@col, row = piece@row + 2))
-    } else if (piece@moved == FALSE &&
-               piece@color == "black" &&
-               board[[piece@col]][[piece@row + 1]] == NULL &&
-               board[[piece@col]][[piece@row + 2]] == NULL) {
-      piece@available_moves <- piece@available_moves |>
-        append(list(col = piece@col, row = piece@row - 2))
     }
-    ### check for 1 square moves
-    if (piece@color == "white" &&
+    if (
         board[[piece@col]][[piece@row + 1]] == NULL &&
         piece@row + 1 <= 8) {
       piece@available_moves <- piece@available_moves |>
         append(list(col = piece@col, row = piece@row + 1))
-    } else if (piece@color == "black" &&
-               board[[piece@col]][[piece@row - 1]] == NULL &&
-               piece@row - 1 >= 1) {
-      piece@available_moves <- piece@available_moves |>
-        append(list(col = piece@col, row = piece@row - 1))
     }
-  }
   return(piece)
 }
 
+black_pawn_available_moves <- function(piece, board) {
+    if (piece@moved == FALSE &&
+        board[[piece@col]][[piece@row - 2]] == NULL &&
+        board[[piece@col]][[piece@row - 1]] == NULL) {
+      piece@available_moves <- piece@available_moves |>
+        append(list(col = piece@col, row = piece@row + 2))
+    }
+    if (
+        board[[piece@col]][[piece@row - 1]] == NULL &&
+        piece@row - 1 >= 1) {
+      piece@available_moves <- piece@available_moves |>
+        append(list(col = piece@col, row = piece@row + 1))
+    }
+  return(piece)
+}
 
 check_available_moves(a[["a"]][[2]], a)
 a[["a"]][[2]]
