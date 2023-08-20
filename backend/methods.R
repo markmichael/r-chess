@@ -1,5 +1,11 @@
+sapply(list.files("./helpers", full.names = TRUE), source)
 new_game <- function() {
-  game_board <- list(
+  game_board <- game(
+    board = list(),
+    turn = "white",
+    moves = list()
+  )
+  game_board@board <- list(
     a = list(),
     b = list(),
     c = list(),
@@ -9,9 +15,10 @@ new_game <- function() {
     g = list(),
     h = list()
   )
-  print(game_board$a)
+  print(game_board@board$a)
+
   ## create an empty board
-  game_board <- game_board |>
+  game_board@board <- game_board@board |>
     lapply(function(column) {
       print(column)
       return(
@@ -28,9 +35,9 @@ new_game <- function() {
       )
     })
   ## place pawns
-  game_board <- seq_along(game_board) |>
+  game_board@board <- seq_along(game_board@board) |>
     lapply(function(i) {
-      final_column <- game_board[[i]]
+      final_column <- game_board@board[[i]]
       white_pawn <- piece(
         color = "white",
         row = 2L,
@@ -173,17 +180,55 @@ new_game <- function() {
       }
       final_column[[2]] <- white_pawn
       final_column[[7]] <- black_pawn
+
+      final_column[[3]] <- null_piece <- piece(
+        color = "none",
+        row = 3L,
+        col = letters[[i]],
+        piece_type = "none",
+        piece_symbol = "",
+        available_moves = list(),
+        checked = FALSE,
+        moved = FALSE
+      )
+      final_column[[4]] <- null_piece <- piece(
+        color = "none",
+        row = 4L,
+        col = letters[[i]],
+        piece_type = "none",
+        piece_symbol = "",
+        available_moves = list(),
+        checked = FALSE,
+        moved = FALSE
+      )
+      final_column[[5]] <- null_piece <- piece(
+        color = "none",
+        row = 5L,
+        col = letters[[i]],
+        piece_type = "none",
+        piece_symbol = "",
+        available_moves = list(),
+        checked = FALSE,
+        moved = FALSE
+      )
+      final_column[[6]] <- null_piece <- piece(
+        color = "none",
+        row = 6L,
+        col = letters[[i]],
+        piece_type = "none",
+        piece_symbol = "",
+        available_moves = list(),
+        checked = FALSE,
+        moved = FALSE
+      )
+
       return(final_column)
     })
-  names(game_board) <- letters[1:8]
+  names(game_board@board) <- letters[1:8]
   ## place rooks
 
   return(game_board)
 }
-source("./objects.R")
-a <- new_game()
-print(a)
-
 check_available_moves <- function(piece, board) {
   if (piece@piece_type == "pawn" && piece@color == "white") {
     return(white_pawn_available_moves(piece, board))
@@ -193,37 +238,10 @@ check_available_moves <- function(piece, board) {
   }
   return(piece)
 }
-white_pawn_available_moves <- function(piece, board) {
-  if (piece@moved == FALSE &&
-    is.null(board[[piece@col]][[piece@row + 2]]) &&
-    is.null(board[[piece@col]][[piece@row + 1]])) {
-    piece@available_moves <- piece@available_moves |>
-      append(list(list(col = piece@col, row = piece@row + 2)))
-  }
-  if (
-    is.null(board[[piece@col]][[piece@row + 1]]) &&
-      piece@row + 1 <= 8) {
-    piece@available_moves <- piece@available_moves |>
-      append(list(list(col = piece@col, row = piece@row + 1)))
-  }
-  return(piece)
-}
 
-black_pawn_available_moves <- function(piece, board) {
-  if (piece@moved == FALSE &&
-    is.null(board[[piece@col]][[piece@row - 2]]) &&
-    is.null(board[[piece@col]][[piece@row - 1]])) {
-    piece@available_moves <- piece@available_moves |>
-      append(list(list(col = piece@col, row = piece@row + 2)))
-  }
-  if (
-    is.null(board[[piece@col]][[piece@row - 1]]) &&
-      piece@row - 1 >= 1) {
-    piece@available_moves <- piece@available_moves |>
-      append(list(list(col = piece@col, row = piece@row + 1)))
-  }
-  return(piece)
-}
-
-a[["a"]][[2]] <- check_available_moves(a[["a"]][[2]], a)
-a[["a"]][[2]]@available_moves
+source("./objects.R")
+a <- new_game()
+a@board[["a"]][[4]]
+class(a)
+a@board[["a"]][[2]] <- check_available_moves(a@board[["a"]][[2]], a@board)
+a@board[["a"]][[2]]

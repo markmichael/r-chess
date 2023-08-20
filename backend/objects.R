@@ -1,3 +1,11 @@
+game <- setClass("game",
+  contains = "list",
+  slots = c(
+    board = "list",
+    turn = "character",
+    moves = "list"
+  )
+)
 
 piece <- setClass("piece",
   contains = "list",
