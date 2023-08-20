@@ -1,7 +1,7 @@
 source("../objects.R")
 
 bishop_available_moves <- function(board, piece) {
-  if (!(piece@piece_type %in% c("queen", "bishop"))) {
+  if (!(piece@piece_type %in% c("king", "queen", "bishop"))) {
     return(piece)
   }
 

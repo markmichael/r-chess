@@ -1,7 +1,7 @@
 source("../objects.R")
 
 rook_available_moves <- function(board, piece) {
-  if (!(piece@piece_type %in% c("queen", "rook"))) {
+  if (!(piece@piece_type %in% c("king", "queen", "rook"))) {
     return(piece)
   }
   ### test above rook
