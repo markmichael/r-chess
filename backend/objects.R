@@ -1,9 +1,11 @@
 game <- setClass("game",
   contains = "list",
   slots = c(
-    board = "list",
-    turn = "character",
-    moves = "list"
+    board = "list", # current board
+    turn = "character", # white or black
+    moves = "list", # list of all previous moves
+    check = "logical", # whether the current player is in check
+    checkmate = "logical" # whether the current player is in checkmate
   )
 )
 
@@ -16,7 +18,6 @@ piece <- setClass("piece",
     available_moves = "list",
     piece_type = "character",
     piece_symbol = "character",
-    checked = "logical",
     moved = "logical"
   )
 )

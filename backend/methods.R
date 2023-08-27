@@ -3,7 +3,9 @@ new_game <- function() {
   game_board <- game(
     board = list(),
     turn = "white",
-    moves = list()
+    moves = list(),
+    check = FALSE,
+    checkmate = FALSE
   )
   game_board@board <- list(
     a = list(),
@@ -45,7 +47,6 @@ new_game <- function() {
         piece_type = "pawn",
         piece_symbol = "p",
         available_moves = list(),
-        checked = FALSE,
         moved = FALSE
       )
       black_pawn <- piece(
@@ -55,7 +56,6 @@ new_game <- function() {
         piece_type = "pawn",
         piece_symbol = "p",
         available_moves = list(),
-        checked = FALSE,
         moved = FALSE
       )
       if (i %in% c(1, 8)) {
@@ -66,7 +66,6 @@ new_game <- function() {
           piece_type = "rook",
           piece_symbol = "r",
           available_moves = list(),
-          checked = FALSE,
           moved = FALSE
         )
         black_rook <- piece(
@@ -76,7 +75,6 @@ new_game <- function() {
           piece_type = "rook",
           piece_symbol = "r",
           available_moves = list(),
-          checked = FALSE,
           moved = FALSE
         )
         final_column[[1]] <- white_rook
@@ -90,7 +88,6 @@ new_game <- function() {
           piece_type = "knight",
           piece_symbol = "n",
           available_moves = list(),
-          checked = FALSE,
           moved = FALSE
         )
         black_knight <- piece(
@@ -100,7 +97,6 @@ new_game <- function() {
           piece_type = "knight",
           piece_symbol = "n",
           available_moves = list(),
-          checked = FALSE,
           moved = FALSE
         )
         final_column[[1]] <- white_knight
@@ -114,7 +110,6 @@ new_game <- function() {
           piece_type = "bishop",
           piece_symbol = "b",
           available_moves = list(),
-          checked = FALSE,
           moved = FALSE
         )
         black_bishop <- piece(
@@ -124,11 +119,11 @@ new_game <- function() {
           piece_type = "bishop",
           piece_symbol = "b",
           available_moves = list(),
-          checked = FALSE,
           moved = FALSE
         )
         final_column[[1]] <- white_bishop
         final_column[[8]] <- black_bishop
+      }
         if (i == 4) {
           white_queen <- piece(
             color = "white",
@@ -137,7 +132,6 @@ new_game <- function() {
             piece_type = "queen",
             piece_symbol = "q",
             available_moves = list(),
-            checked = FALSE,
             moved = FALSE
           )
           black_queen <- piece(
@@ -147,7 +141,6 @@ new_game <- function() {
             piece_type = "queen",
             piece_symbol = "q",
             available_moves = list(),
-            checked = FALSE,
             moved = FALSE
           )
           final_column[[1]] <- white_queen
@@ -161,7 +154,6 @@ new_game <- function() {
             piece_type = "king",
             piece_symbol = "k",
             available_moves = list(),
-            checked = FALSE,
             moved = FALSE
           )
           black_king <- piece(
@@ -171,13 +163,12 @@ new_game <- function() {
             piece_type = "king",
             piece_symbol = "k",
             available_moves = list(),
-            checked = FALSE,
             moved = FALSE
           )
           final_column[[1]] <- white_king
           final_column[[8]] <- black_king
         }
-      }
+      
       final_column[[2]] <- white_pawn
       final_column[[7]] <- black_pawn
 
@@ -188,7 +179,6 @@ new_game <- function() {
         piece_type = "none",
         piece_symbol = "",
         available_moves = list(),
-        checked = FALSE,
         moved = FALSE
       )
       final_column[[4]] <- null_piece <- piece(
@@ -198,7 +188,6 @@ new_game <- function() {
         piece_type = "none",
         piece_symbol = "",
         available_moves = list(),
-        checked = FALSE,
         moved = FALSE
       )
       final_column[[5]] <- null_piece <- piece(
@@ -208,7 +197,6 @@ new_game <- function() {
         piece_type = "none",
         piece_symbol = "",
         available_moves = list(),
-        checked = FALSE,
         moved = FALSE
       )
       final_column[[6]] <- null_piece <- piece(
@@ -218,7 +206,6 @@ new_game <- function() {
         piece_type = "none",
         piece_symbol = "",
         available_moves = list(),
-        checked = FALSE,
         moved = FALSE
       )
 
@@ -229,19 +216,35 @@ new_game <- function() {
 
   return(game_board)
 }
-check_available_moves <- function(piece, board) {
+
+check_available_moves <- function(game, piece) {
   if (piece@piece_type == "pawn" && piece@color == "white") {
-    return(white_pawn_available_moves(piece, board))
+    piece <- white_pawn_available_moves(game@board, piece)
   }
   if (piece@piece_type == "pawn" && piece@color == "black") {
-    return(black_pawn_available_moves(piece, board))
+    piece <- black_pawn_available_moves(game@board, piece)
+  }
+  if (piece@piece_type == "rook") {
+    piece <- rook_available_moves(game@board, piece)
+  }
+  if (piece@piece_type == "bishop") {
+    piece <- bishop_available_moves(game@board, piece)
+  }
+  if (piece@piece_type == "knight") {
+    piece <- knight_available_moves(game@board, piece)
+  }
+  if (piece@piece_type == "queen") {
+    piece <- queen_available_moves(game@board, piece)
+  }
+  if (piece@piece_type == "king") {
+    piece <- king_available_moves(game@board, piece)
   }
   return(piece)
 }
 
-source("./objects.R")
-a <- new_game()
-a@board[["a"]][[4]]
-class(a)
-a@board[["a"]][[2]] <- check_available_moves(a@board[["a"]][[2]], a@board)
-a@board[["a"]][[2]]
+check_all_available_moves <- function(game) {
+  game@board <- lapply(game@board, FUN = function(col, game) {
+    col <- lapply(col, check_available_moves, game = game)
+  }, game = game)
+return(game)
+}

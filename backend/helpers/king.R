@@ -1,6 +1,3 @@
-source("../objects.R")
-source("./queen.R")
-
 king_available_moves <- function(board, piece) {
   if (piece@piece_type != "king") {
     return(piece)
