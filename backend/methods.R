@@ -124,51 +124,51 @@ new_game <- function() {
         final_column[[1]] <- white_bishop
         final_column[[8]] <- black_bishop
       }
-        if (i == 4) {
-          white_queen <- piece(
-            color = "white",
-            row = 1L,
-            col = letters[[i]],
-            piece_type = "queen",
-            piece_symbol = "q",
-            available_moves = list(),
-            moved = FALSE
-          )
-          black_queen <- piece(
-            color = "black",
-            row = 8L,
-            col = letters[[i]],
-            piece_type = "queen",
-            piece_symbol = "q",
-            available_moves = list(),
-            moved = FALSE
-          )
-          final_column[[1]] <- white_queen
-          final_column[[8]] <- black_queen
-        }
-        if (i == 5) {
-          white_king <- piece(
-            color = "white",
-            row = 1L,
-            col = letters[[i]],
-            piece_type = "king",
-            piece_symbol = "k",
-            available_moves = list(),
-            moved = FALSE
-          )
-          black_king <- piece(
-            color = "black",
-            row = 8L,
-            col = letters[[i]],
-            piece_type = "king",
-            piece_symbol = "k",
-            available_moves = list(),
-            moved = FALSE
-          )
-          final_column[[1]] <- white_king
-          final_column[[8]] <- black_king
-        }
-      
+      if (i == 4) {
+        white_queen <- piece(
+          color = "white",
+          row = 1L,
+          col = letters[[i]],
+          piece_type = "queen",
+          piece_symbol = "q",
+          available_moves = list(),
+          moved = FALSE
+        )
+        black_queen <- piece(
+          color = "black",
+          row = 8L,
+          col = letters[[i]],
+          piece_type = "queen",
+          piece_symbol = "q",
+          available_moves = list(),
+          moved = FALSE
+        )
+        final_column[[1]] <- white_queen
+        final_column[[8]] <- black_queen
+      }
+      if (i == 5) {
+        white_king <- piece(
+          color = "white",
+          row = 1L,
+          col = letters[[i]],
+          piece_type = "king",
+          piece_symbol = "k",
+          available_moves = list(),
+          moved = FALSE
+        )
+        black_king <- piece(
+          color = "black",
+          row = 8L,
+          col = letters[[i]],
+          piece_type = "king",
+          piece_symbol = "k",
+          available_moves = list(),
+          moved = FALSE
+        )
+        final_column[[1]] <- white_king
+        final_column[[8]] <- black_king
+      }
+
       final_column[[2]] <- white_pawn
       final_column[[7]] <- black_pawn
 
@@ -246,16 +246,33 @@ check_all_available_moves <- function(game) {
   game@board <- lapply(game@board, FUN = function(col, game) {
     col <- lapply(col, check_available_moves, game = game)
   }, game = game)
-return(game)
+  return(game)
 }
 
 game2json <- function(game) {
-list_game <- list (board = game@board,
-turn = game@turn,
-moves = game@moves,
-check = game@check,
-checkmate = game@checkmate)
-return(list_game)
+  list_game <- list(
+    board = game@board,
+    turn = game@turn,
+    moves = game@moves,
+    check = game@check,
+    checkmate = game@checkmate
+  )
+  list_game$board <- lapply(game@board, FUN = function(col) {
+    lapply(col, FUN = function(piece) {
+      return(
+        list(
+          color = piece@color,
+          row = piece@row,
+          col = piece@col,
+          piece_type = piece@piece_type,
+          piece_symbol = piece@piece_symbol,
+          available_moves = piece@available_moves,
+          moved = piece@moved
+        )
+      )
+    })
+  })
+  return(list_game)
 }
 
 json2game <- function(list_game) {
@@ -266,5 +283,18 @@ json2game <- function(list_game) {
     check = list_game$check,
     checkmate = list_game$checkmate
   )
+  game@board <- lapply(game@board, FUN = function(col) {
+    lapply(col, FUN = function(piece) {
+      return(piece(
+        color = piece$color,
+        row = piece$row,
+        col = piece$col,
+        piece_type = piece$piece_type,
+        piece_symbol = piece$piece_symbol,
+        available_moves = piece$available_moves,
+        moved = piece$moved
+      ))
+    })
+  })
   return(game)
 }
