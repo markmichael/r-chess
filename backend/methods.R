@@ -248,3 +248,23 @@ check_all_available_moves <- function(game) {
   }, game = game)
 return(game)
 }
+
+game2json <- function(game) {
+list_game <- list (board = game@board,
+turn = game@turn,
+moves = game@moves,
+check = game@check,
+checkmate = game@checkmate)
+return(list_game)
+}
+
+json2game <- function(list_game) {
+  game <- game(
+    board = list_game$board,
+    turn = list_game$turn,
+    moves = list_game$moves,
+    check = list_game$check,
+    checkmate = list_game$checkmate
+  )
+  return(game)
+}
