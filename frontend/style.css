@@ -1,0 +1,30 @@
+#board {
+background-color: black;
+width: 640px;
+height: 640px;
+}
+
+.col {
+margin-right: -2px;
+margin-left: -2px;
+padding: 0;
+border: 0;
+display: inline-block;
+width: 80px;
+height: 640px;
+background-color: blue;
+}
+
+.black_square {
+border: 0;
+background-color: black;
+width: 80px;
+height: 80px;
+}
+
+.white_square {
+border: 0;
+background-color: white;
+width: 80px;
+height: 80px;
+}

@@ -1,3 +1,9 @@
+#* @filter cors
+cors <- function(res) {
+    res$setHeader("Access-Control-Allow-Origin", "*")
+    plumber::forward()
+}
+
 #* Start new game
 #* @get /newgame
 newgame <- function() {
