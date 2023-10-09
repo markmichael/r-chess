@@ -227,11 +227,14 @@ new_game <- function() {
             return(final_column)
         })
     names(game_board@board) <- letters[1:8]
+    game_board <- game_board |>
+        check_all_available_moves()
 saveRDS(game_board, paste0("./games/", game_board@id, ".rds"))
     return(game_board)
 }
 
 check_available_moves <- function(game, piece) {
+    print(piece)
     if (piece@piece_type == "pawn" && piece@color == "white") {
         piece <- white_pawn_available_moves(game@board, piece)
     }

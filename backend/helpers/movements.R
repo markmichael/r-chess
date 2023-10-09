@@ -1,6 +1,6 @@
 move_piece <- function(game_id, current_location, new_location) {
-    ### retrieve game
-    game <- readRDS(paste0("./games/", game_id, ".rds"))
+  ### retrieve game
+  game <- readRDS(paste0("./games/", game_id, ".rds"))
   ### check valid move
   if (check_move(game, current_location, new_location)) {
     ### update new location with piece
@@ -8,7 +8,7 @@ move_piece <- function(game_id, current_location, new_location) {
     ### convert current location to null_piece
     game <- convert_to_null(game, current_location)
     ### save game
-    saveRDS(game, paste0("./backend/games/", game@id, ".rds"))
+    saveRDS(game, paste0("./games/", game@id, ".rds"))
   } else {
     return(game) # move not valid, return game unchanged
   }
@@ -17,12 +17,16 @@ move_piece <- function(game_id, current_location, new_location) {
 
 check_move <- function(game, current_location, new_location) {
   ### check valid move
-    print(current_location)
-    print(new_location)
-  if (any(list(new_location) %in% game@board[[current_location[[1]]]][[current_location[[2]]]]@available_moves)) {
+  print(current_location)
+  print("current location col:")
+  print(current_location[["col"]])
+  print(new_location)
+  print("e2 available moves")
+  print(game@board[["e"]][[2]]@available_moves)
+  if (any(list(new_location) %in% game@board[[current_location[["col"]]]][[current_location[["row"]]]]@available_moves)) {
     return(TRUE)
   } else {
-      print("move not valid")
+    print("move not valid")
     return(FALSE)
   }
 }
