@@ -13,6 +13,8 @@ move_piece <- function(game, current_location, new_location) {
 
 check_move <- function(game, current_location, new_location) {
   ### check valid move
+    print(current_location)
+    print(new_location)
   if (any(list(new_location) %in% game@board[[current_location[[1]]]][[current_location[[2]]]]@available_moves)) {
     return(TRUE)
   } else {

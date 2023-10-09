@@ -1,31 +1,38 @@
-#* @filter cors
-cors <- function(res) {
-    res$setHeader("Access-Control-Allow-Origin", "*")
+#' @filter cors
+cors <- function(req, res) {
+  res$setHeader("Access-Control-Allow-Origin", "*")
+
+  if (req$REQUEST_METHOD == "OPTIONS") {
+    res$setHeader("Access-Control-Allow-Methods", "*")
+    res$setHeader("Access-Control-Allow-Headers", req$HTTP_ACCESS_CONTROL_REQUEST_HEADERS)
+    res$status <- 200
+    return(list())
+  } else {
     plumber::forward()
+  }
 }
 
 #* Start new game
 #* @get /newgame
 newgame <- function() {
-  source("./methods.R")
   new_game() |>
     check_all_available_moves() |>
     game2json()
 }
 
 #* Move Piece
+#* @preempt cors
 #* @post /movepiece
-#* @param current_location
-#* @param new_location
-movepiece <- function(current_location, new_location) {
-  source("./helpers/movements.R")
+#* @param currentLocation
+#* @param newLocation
+movepiece <- function(currentLocation, newLocation) {
   ### parse locations
-  current_location_list <- strsplit(x = current_location, split = "")
+  current_location_list <- strsplit(x = currentLocation, split = "")
   current_location_list <- list(
     row = current_location_list[2],
     col = current_location_list[1]
   )
-  new_location_list <- strsplit(x = new_location, split = "")
+  new_location_list <- strsplit(x = newLocation, split = "")
   new_location_list <- list(
     row = new_location_list[2],
     col = new_location_list[1]
@@ -34,4 +41,5 @@ movepiece <- function(current_location, new_location) {
   newgame <- move_piece(newgame, current_location_list, new_location_list) |>
     check_all_available_moves()
   game2json()
+  return(newgame)
 }
