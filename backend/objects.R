@@ -1,23 +1,24 @@
 game <- setClass("game",
-  contains = "list",
-  slots = c(
-    board = "list", # current board
-    turn = "character", # white or black
-    moves = "list", # list of all previous moves
-    check = "logical", # whether the current player is in check
-    checkmate = "logical" # whether the current player is in checkmate
-  )
+    contains = "list",
+    slots = c(
+        id = "character",
+        board = "list", # current board
+        turn = "character", # white or black
+        moves = "list", # list of all previous moves
+        check = "logical", # whether the current player is in check
+        checkmate = "logical" # whether the current player is in checkmate
+    )
 )
 
 piece <- setClass("piece",
-  contains = "list",
-  slots = c(
-    color = "character",
-    row = "integer",
-    col = "character",
-    available_moves = "list",
-    piece_type = "character",
-    piece_symbol = "character",
-    moved = "logical"
-  )
+    contains = "list",
+    slots = c(
+        color = "character",
+        row = "integer",
+        col = "character",
+        available_moves = "list",
+        piece_type = "character",
+        piece_symbol = "character",
+        moved = "logical"
+    )
 )

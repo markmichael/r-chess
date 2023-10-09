@@ -1,10 +1,14 @@
-move_piece <- function(game, current_location, new_location) {
+move_piece <- function(game_id, current_location, new_location) {
+    ### retrieve game
+    game <- readRDS(paste0("./games/", game_id, ".rds"))
   ### check valid move
   if (check_move(game, current_location, new_location)) {
     ### update new location with piece
     game <- update_location_with_piece(game, current_location, new_location)
     ### convert current location to null_piece
     game <- convert_to_null(game, current_location)
+    ### save game
+    saveRDS(game, paste0("./backend/games/", game@id, ".rds"))
   } else {
     return(game) # move not valid, return game unchanged
   }

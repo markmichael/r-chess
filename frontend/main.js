@@ -23,11 +23,12 @@ boardInfo.onload = () => {
 // post move after clicking submit
 const submit = document.getElementById('submitMove')
 submit.onclick = () => {
+  const gameId = boardInfo.response.id
   const currentLocation = document.getElementById('current_location').value
   const newLocation = document.getElementById('new_location').value
   const xhr = new XMLHttpRequest()
   xhr.responseType = 'json'
   xhr.open('POST', 'http://localhost:8001/movepiece', true)
   xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send(JSON.stringify({ currentLocation, newLocation }))
+  xhr.send(JSON.stringify({ gameId, currentLocation, newLocation }))
 }

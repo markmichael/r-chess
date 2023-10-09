@@ -23,9 +23,10 @@ newgame <- function() {
 #* Move Piece
 #* @preempt cors
 #* @post /movepiece
+#* @param gameId
 #* @param currentLocation
 #* @param newLocation
-movepiece <- function(currentLocation, newLocation) {
+movepiece <- function(gameId, currentLocation, newLocation) {
   ### parse locations
   current_location_list <- strsplit(x = currentLocation, split = "")
   current_location_list <- list(
@@ -38,7 +39,7 @@ movepiece <- function(currentLocation, newLocation) {
     col = new_location_list[1]
   )
 
-  newgame <- move_piece(newgame, current_location_list, new_location_list) |>
+  newgame <- move_piece(gameId, current_location_list, new_location_list) |>
     check_all_available_moves()
   game2json()
   return(newgame)
