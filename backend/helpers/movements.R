@@ -7,6 +7,10 @@ move_piece <- function(game_id, current_location, new_location) {
     game <- update_location_with_piece(game, current_location, new_location)
     ### convert current location to null_piece
     game <- convert_to_null(game, current_location)
+    ### update game
+    game <- check_all_available_moves(game)
+    ### update turn
+    game@turn <- ifelse(game@turn == "white", "black", "white")
     ### save game
     saveRDS(game, paste0("./games/", game@id, ".rds"))
   } else {
@@ -17,12 +21,6 @@ move_piece <- function(game_id, current_location, new_location) {
 
 check_move <- function(game, current_location, new_location) {
   ### check valid move
-  print(current_location)
-  print("current location col:")
-  print(current_location[["col"]])
-  print(new_location)
-  print("e2 available moves")
-  print(game@board[["e"]][[2]]@available_moves)
   if (any(list(new_location) %in% game@board[[current_location[["col"]]]][[current_location[["row"]]]]@available_moves)) {
     return(TRUE)
   } else {

@@ -19,7 +19,6 @@ index <- function() {
 }
 
 #* Start new game
-#* @preempt cors
 #* @get /newgame
 newgame <- function() {
     modified_game <- new_game() |>
@@ -28,7 +27,6 @@ newgame <- function() {
 }
 
 #* Move Piece
-#* @preempt cors
 #* @post /movepiece
 #* @param gameId
 #* @param currentLocation
@@ -40,7 +38,6 @@ movepiece <- function(gameId, currentLocation, newLocation) {
         col = current_location_list[[1]][1],
         row = current_location_list[[1]][2] |> as.integer()
     )
-    print(current_location_list)
     new_location_list <- strsplit(x = newLocation, split = "")
     new_location_list <- list(
         col = new_location_list[[1]][1],
@@ -48,7 +45,6 @@ movepiece <- function(gameId, currentLocation, newLocation) {
     )
 
     modified_game <- move_piece(gameId, current_location_list, new_location_list) |>
-        check_all_available_moves() |>
     game2json()
     return(modified_game)
 }

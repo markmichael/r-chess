@@ -37,7 +37,6 @@ new_game <- function() {
     ## create an empty board
     game_board@board <- game_board@board |>
         lapply(function(column) {
-            print(column)
             return(
                 list(
                     NULL,
@@ -234,7 +233,7 @@ saveRDS(game_board, paste0("./games/", game_board@id, ".rds"))
 }
 
 check_available_moves <- function(game, piece) {
-    print(piece)
+    piece@available_moves <- list()
     if (piece@piece_type == "pawn" && piece@color == "white") {
         piece <- white_pawn_available_moves(game@board, piece)
     }
@@ -263,6 +262,7 @@ check_all_available_moves <- function(game) {
     game@board <- lapply(game@board, FUN = function(col, game) {
         col <- lapply(col, check_available_moves, game = game)
     }, game = game)
+    saveRDS(game, paste0("./games/", game@id, ".rds"))
     return(game)
 }
 

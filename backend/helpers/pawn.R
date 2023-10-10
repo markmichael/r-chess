@@ -38,13 +38,13 @@ black_pawn_available_moves <- function(board, piece) {
     board[[piece@col]][[piece@row - 2]]@color == "none" &&
     board[[piece@col]][[piece@row - 1]]@color == "none") {
     piece@available_moves <- piece@available_moves |>
-      append(list(list(col = piece@col, row = piece@row + 2)))
+      append(list(list(col = piece@col, row = piece@row - 2)))
   }
   if (
     board[[piece@col]][[piece@row - 1]]@color == "none" &&
       piece@row - 1 >= 1) {
     piece@available_moves <- piece@available_moves |>
-      append(list(list(col = piece@col, row = piece@row + 1)))
+      append(list(list(col = piece@col, row = piece@row - 1)))
   }
   ### check for attack
   if (piece@col != "h") {

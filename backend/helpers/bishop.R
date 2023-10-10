@@ -24,12 +24,8 @@ bishop_available_moves <- function(board, piece) {
   ### test above left diagonal
   test_position_x <- letters[which(letters == piece@col) - 1]
   test_position_y <- piece@row + 1
-  print("bishop above left diagonal")
-  print(test_position_x)
-  print(test_position_y)
   if (length(test_position_x) > 0) {
   while (length(test_position_x) > 0 && test_position_x >= "a" && test_position_y <= 8) {
-  print(board[[test_position_x]][[test_position_y]])
     if (board[[test_position_x]][[test_position_y]]@color == "none") {
       piece@available_moves <- piece@available_moves |>
         append(list(list(col = test_position_x, row = test_position_y)))
