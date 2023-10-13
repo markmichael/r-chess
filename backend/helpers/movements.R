@@ -7,10 +7,10 @@ move_piece <- function(game_id, current_location, new_location) {
     game <- update_location_with_piece(game, current_location, new_location)
     ### convert current location to null_piece
     game <- convert_to_null(game, current_location)
-    ### update game
-    game <- check_all_available_moves(game)
     ### update turn
     game@turn <- ifelse(game@turn == "white", "black", "white")
+    ### update game
+    game <- check_all_available_moves(game)
     ### save game
     saveRDS(game, paste0("./games/", game@id, ".rds"))
   } else {
@@ -45,5 +45,7 @@ update_location_with_piece <- function(game, current_location, new_location) {
   ### update location of moved piece
   game@board[[new_location[[1]]]][[new_location[[2]]]]@row <- new_location[[2]]
   game@board[[new_location[[1]]]][[new_location[[2]]]]@col <- new_location[[1]]
+  ### update moved status of moved piece
+  game@board[[new_location[[1]]]][[new_location[[2]]]]@moved <- TRUE
   return(game)
 }
