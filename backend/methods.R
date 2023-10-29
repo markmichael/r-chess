@@ -25,14 +25,14 @@ new_game <- function() {
         collapse = ""
     )
     game_board@board <- list(
-        a = list(),
-        b = list(),
-        c = list(),
-        d = list(),
-        e = list(),
-        f = list(),
-        g = list(),
-        h = list()
+        list(),
+        list(),
+        list(),
+        list(),
+        list(),
+        list(),
+        list(),
+        list()
     )
     ## create an empty board
     game_board@board <- game_board@board |>
@@ -53,11 +53,12 @@ new_game <- function() {
     ## place pawns
     game_board@board <- seq_along(game_board@board) |>
         lapply(function(i) {
+            i <- as.integer(i)
             final_column <- game_board@board[[i]]
             white_pawn <- piece(
                 color = "white",
                 row = 2L,
-                col = letters[[i]],
+                col = i,
                 piece_type = "pawn",
                 piece_symbol = "p",
                 available_moves = list(),
@@ -66,7 +67,7 @@ new_game <- function() {
             black_pawn <- piece(
                 color = "black",
                 row = 7L,
-                col = letters[[i]],
+                col = i,
                 piece_type = "pawn",
                 piece_symbol = "p",
                 available_moves = list(),
@@ -76,7 +77,7 @@ new_game <- function() {
                 white_rook <- piece(
                     color = "white",
                     row = 1L,
-                    col = letters[[i]],
+                    col = i,
                     piece_type = "rook",
                     piece_symbol = "r",
                     available_moves = list(),
@@ -85,7 +86,7 @@ new_game <- function() {
                 black_rook <- piece(
                     color = "black",
                     row = 8L,
-                    col = letters[[i]],
+                    col = i,
                     piece_type = "rook",
                     piece_symbol = "r",
                     available_moves = list(),
@@ -98,7 +99,7 @@ new_game <- function() {
                 white_knight <- piece(
                     color = "white",
                     row = 1L,
-                    col = letters[[i]],
+                    col = i,
                     piece_type = "knight",
                     piece_symbol = "n",
                     available_moves = list(),
@@ -107,7 +108,7 @@ new_game <- function() {
                 black_knight <- piece(
                     color = "black",
                     row = 8L,
-                    col = letters[[i]],
+                    col = i,
                     piece_type = "knight",
                     piece_symbol = "n",
                     available_moves = list(),
@@ -120,7 +121,7 @@ new_game <- function() {
                 white_bishop <- piece(
                     color = "white",
                     row = 1L,
-                    col = letters[[i]],
+                    col = i,
                     piece_type = "bishop",
                     piece_symbol = "b",
                     available_moves = list(),
@@ -129,7 +130,7 @@ new_game <- function() {
                 black_bishop <- piece(
                     color = "black",
                     row = 8L,
-                    col = letters[[i]],
+                    col = i,
                     piece_type = "bishop",
                     piece_symbol = "b",
                     available_moves = list(),
@@ -142,7 +143,7 @@ new_game <- function() {
                 white_queen <- piece(
                     color = "white",
                     row = 1L,
-                    col = letters[[i]],
+                    col = i,
                     piece_type = "queen",
                     piece_symbol = "q",
                     available_moves = list(),
@@ -151,7 +152,7 @@ new_game <- function() {
                 black_queen <- piece(
                     color = "black",
                     row = 8L,
-                    col = letters[[i]],
+                    col = i,
                     piece_type = "queen",
                     piece_symbol = "q",
                     available_moves = list(),
@@ -164,7 +165,7 @@ new_game <- function() {
                 white_king <- piece(
                     color = "white",
                     row = 1L,
-                    col = letters[[i]],
+                    col = i,
                     piece_type = "king",
                     piece_symbol = "k",
                     available_moves = list(),
@@ -173,7 +174,7 @@ new_game <- function() {
                 black_king <- piece(
                     color = "black",
                     row = 8L,
-                    col = letters[[i]],
+                    col = i,
                     piece_type = "king",
                     piece_symbol = "k",
                     available_moves = list(),
@@ -189,7 +190,7 @@ new_game <- function() {
             final_column[[3]] <- null_piece <- piece(
                 color = "none",
                 row = 3L,
-                col = letters[[i]],
+                col = i,
                 piece_type = "none",
                 piece_symbol = "",
                 available_moves = list(),
@@ -198,7 +199,7 @@ new_game <- function() {
             final_column[[4]] <- null_piece <- piece(
                 color = "none",
                 row = 4L,
-                col = letters[[i]],
+                col = i,
                 piece_type = "none",
                 piece_symbol = "",
                 available_moves = list(),
@@ -207,7 +208,7 @@ new_game <- function() {
             final_column[[5]] <- null_piece <- piece(
                 color = "none",
                 row = 5L,
-                col = letters[[i]],
+                col = i,
                 piece_type = "none",
                 piece_symbol = "",
                 available_moves = list(),
@@ -216,7 +217,7 @@ new_game <- function() {
             final_column[[6]] <- null_piece <- piece(
                 color = "none",
                 row = 6L,
-                col = letters[[i]],
+                col = i,
                 piece_type = "none",
                 piece_symbol = "",
                 available_moves = list(),

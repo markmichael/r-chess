@@ -15,7 +15,7 @@ piece <- setClass("piece",
     slots = c(
         color = "character",
         row = "integer",
-        col = "character",
+        col = "integer",
         available_moves = "list",
         piece_type = "character",
         piece_symbol = "character",
