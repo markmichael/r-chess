@@ -226,7 +226,6 @@ new_game <- function() {
 
             return(final_column)
         })
-    names(game_board@board) <- letters[1:8]
     game_board <- game_board |>
         check_all_available_moves()
     saveRDS(game_board, paste0("./games/", game_board@id, ".rds"))
@@ -286,7 +285,7 @@ game2json <- function(game) {
                 list(
                     color = piece@color,
                     row = piece@row,
-                    col = piece@col,
+                    col = letters[piece@col],
                     piece_type = piece@piece_type,
                     piece_symbol = piece@piece_symbol,
                     available_moves = piece@available_moves,
@@ -295,6 +294,7 @@ game2json <- function(game) {
             )
         })
     })
+    names(list_game$board) <- c("a", "b", "c", "d", "e", "f", "g", "h")
     return(list_game)
 }
 

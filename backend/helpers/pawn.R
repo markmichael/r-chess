@@ -60,7 +60,7 @@ black_pawn_available_moves <- function(board, piece) {
     if (board[[piece@col - 1]][[piece@row - 1]]@color == "white") {
       piece@available_moves <- piece@available_moves |>
         append(list(list(
-          col = piece@col - 1],
+          col = piece@col - 1,
           row = piece@row - 1
         )))
     }

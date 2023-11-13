@@ -35,16 +35,16 @@ movepiece <- function(gameId, currentLocation, newLocation) {
     ### parse locations
     current_location_list <- strsplit(x = currentLocation, split = "")
     current_location_list <- list(
-        col = current_location_list[[1]][1],
+        col = which(letters == current_location_list[[1]][1]),
         row = current_location_list[[1]][2] |> as.integer()
     )
     new_location_list <- strsplit(x = newLocation, split = "")
     new_location_list <- list(
-        col = new_location_list[[1]][1],
+        col = which(letters == new_location_list[[1]][1]),
         row = new_location_list[[1]][2] |> as.integer()
     )
 
     modified_game <- move_piece(gameId, current_location_list, new_location_list) |>
-    game2json()
+        game2json()
     return(modified_game)
 }

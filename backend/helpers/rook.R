@@ -35,9 +35,8 @@ rook_available_moves <- function(board, piece) {
     test_position_y <- test_position_y - 1
   }
   ### test left rook
-  test_position_x <- letters[which(letters == piece@col) - 1]
-  if (length(test_position_x) > 0) {
-  while (length(test_position_x) > 0 && test_position_x >= "a") {
+  test_position_x <- piece@col - 1
+  while (test_position_x >= 1) {
     if (board[[test_position_x]][[piece@row]]@color == "none") {
       piece@available_moves <- piece@available_moves |>
         append(list(list(col = test_position_x, row = piece@row)))
@@ -48,12 +47,12 @@ rook_available_moves <- function(board, piece) {
     } else {
       break
     }
-    test_position_x <- letters[which(letters == test_position_x) - 1]
+    test_position_x <- test_position_x - 1
   }
-}
+
   ### test right rook
-  test_position_x <- letters[which(letters == piece@col) + 1]
-  while (test_position_x <= "h") {
+  test_position_x <- piece@col + 1
+  while (test_position_x <= 8) {
     if (board[[test_position_x]][[piece@row]]@color == "none") {
       piece@available_moves <- piece@available_moves |>
         append(list(list(col = test_position_x, row = piece@row)))
@@ -64,7 +63,7 @@ rook_available_moves <- function(board, piece) {
     } else {
       break
     }
-    test_position_x <- letters[which(letters == test_position_x) + 1]
+    test_position_x <- test_position_x + 1
   }
   return(piece)
 }
