@@ -22,60 +22,78 @@ king_available_moves <- function(game, piece) {
       }
     })
 
-  ### check for short castle
-  print("piece moved")
-  print(piece@moved)
-  print(board[[piece@col + 1]][[piece@row]]@color)
-  print(board[[piece@col + 2]][[piece@row]]@color)
-  print(board[[piece@col + 3]][[piece@row]]@piece_type)
-  print(!board[[piece@col + 3]][[piece@row]]@moved)
-  print(is_position_attacked(
-    game,
-    list(col = piece@col + 1, row = piece@row)
-  ))
-  if (piece@moved == FALSE &&
-    piece@row == 1 &&
-    board[[piece@col + 1]][[piece@row]]@color == "none" &&
-    board[[piece@col + 2]][[piece@row]]@color == "none" &&
-    board[[piece@col + 3]][[piece@row]]@piece_type == "rook" &&
-    !board[[piece@col + 3]][[piece@row]]@moved &&
-    is_position_attacked(
-      game,
-      list(col = piece@col + 1, row = piece@row)
-    ) &&
-    is_position_attacked(
-      game,
-      list(col = piece@col + 2, row = piece@row)
-    ) &&
-    is_position_attacked(
-      game,
-      list(col = piece@col, row = piece@row)
-    )) {
-    piece@available_moves <- piece@available_moves |>
-      append(list(list(col = piece@col + 2, row = piece@row, castle = TRUE)))
-  }
-  ### check for long castle
-  if (piece@moved == FALSE &&
-    piece@row == 1 &&
-    board[[piece@col - 1]][[piece@row]]@color == "none" &&
-    board[[piece@col - 2]][[piece@row]]@color == "none" &&
-    board[[piece@col - 3]][[piece@row]]@color == "none" &&
-    board[[piece@col - 4]][[piece@row]]@moved == FALSE &&
-    is_position_attacked(
-      game,
-      list(col = piece@col - 1, row = piece@row)
-    ) &&
-    is_position_attacked(
-      game,
-      list(col = piece@col - 2, row = piece@row)
-    ) &&
-    is_position_attacked(
-      game,
-      list(col = piece@col, row = piece@row)
-    )
-  ) {
-    piece@available_moves <- piece@available_moves |>
-      append(list(list(col = piece@col - 2, row = piece@row, castle = TRUE)))
+  ### check for king in original location
+  if ((piece@row == 1 &&
+    piece@col == 5) ||
+    (piece@row == 8 &&
+      piece@col == 5)) {
+    print("king is in original location")
+    print("evaluate for short castle")
+    print("piece")
+    print(piece)
+    print("piece moved")
+    print(piece@moved)
+    print(board[[piece@col + 1]][[piece@row]]@color)
+    print(board[[piece@col + 2]][[piece@row]]@color)
+    print(board[[piece@col + 3]][[piece@row]]@piece_type)
+    print(board[[piece@col + 3]][[piece@row]]@moved)
+    if (piece@moved == FALSE &&
+      piece@row %in% c(1, 8) &&
+      board[[piece@col + 1]][[piece@row]]@color == "none" &&
+      board[[piece@col + 2]][[piece@row]]@color == "none" &&
+      board[[piece@col + 3]][[piece@row]]@piece_type == "rook" &&
+      !board[[piece@col + 3]][[piece@row]]@moved &&
+      !is_position_attacked(
+        game,
+        list(col = piece@col + 1, row = piece@row)
+      ) &&
+      !is_position_attacked(
+        game,
+        list(col = piece@col + 2, row = piece@row)
+      ) &&
+      !is_position_attacked(
+        game,
+        list(col = piece@col, row = piece@row)
+      )) {
+      piece@available_moves <- piece@available_moves |>
+        append(list(list(col = piece@col + 2, row = piece@row)))
+    } else {
+      print("castle not possible")
+    }
+    ### check for long castle
+    print("evaluate for long castle")
+    print("piece")
+    print(piece)
+    print("piece moved")
+    print(piece@moved)
+    print(board[[piece@col - 1]][[piece@row]]@color)
+    print(board[[piece@col - 2]][[piece@row]]@color)
+    print(board[[piece@col - 3]][[piece@row]]@color)
+    print(board[[piece@col - 4]][[piece@row]]@piece_type)
+    print(!board[[piece@col - 4]][[piece@row]]@moved)
+    if (piece@moved == FALSE &&
+      piece@row %in% c(1, 8) &&
+      board[[piece@col - 1]][[piece@row]]@color == "none" &&
+      board[[piece@col - 2]][[piece@row]]@color == "none" &&
+      board[[piece@col - 3]][[piece@row]]@color == "none" &&
+      board[[piece@col - 4]][[piece@row]]@piece_type == "rook" &&
+      board[[piece@col - 4]][[piece@row]]@moved == FALSE &&
+      !is_position_attacked(
+        game,
+        list(col = piece@col - 1, row = piece@row)
+      ) &&
+      !is_position_attacked(
+        game,
+        list(col = piece@col - 2, row = piece@row)
+      ) &&
+      !is_position_attacked(
+        game,
+        list(col = piece@col, row = piece@row)
+      )
+    ) {
+      piece@available_moves <- piece@available_moves |>
+        append(list(list(col = piece@col - 2, row = piece@row)))
+    }
   }
   piece@available_moves <- Filter(Negate(is.null), piece@available_moves)
   return(piece)

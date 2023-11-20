@@ -234,32 +234,28 @@ new_game <- function() {
 
 check_available_moves <- function(game, piece) {
   piece@available_moves <- list()
-  if (piece@color != game@turn) {
-    return(piece)
-  } else {
-    if (piece@piece_type == "pawn" && piece@color == "white") {
-      piece <- white_pawn_available_moves(game@board, piece)
-    }
-    if (piece@piece_type == "pawn" && piece@color == "black") {
-      piece <- black_pawn_available_moves(game@board, piece)
-    }
-    if (piece@piece_type == "rook") {
-      piece <- rook_available_moves(game@board, piece)
-    }
-    if (piece@piece_type == "bishop") {
-      piece <- bishop_available_moves(game@board, piece)
-    }
-    if (piece@piece_type == "knight") {
-      piece <- knight_available_moves(game@board, piece)
-    }
-    if (piece@piece_type == "queen") {
-      piece <- queen_available_moves(game@board, piece)
-    }
-    if (piece@piece_type == "king") {
-      piece <- king_available_moves(game, piece)
-    }
-    return(piece)
+  if (piece@piece_type == "pawn" && piece@color == "white") {
+    piece <- white_pawn_available_moves(game@board, piece)
   }
+  if (piece@piece_type == "pawn" && piece@color == "black") {
+    piece <- black_pawn_available_moves(game@board, piece)
+  }
+  if (piece@piece_type == "rook") {
+    piece <- rook_available_moves(game@board, piece)
+  }
+  if (piece@piece_type == "bishop") {
+    piece <- bishop_available_moves(game@board, piece)
+  }
+  if (piece@piece_type == "knight") {
+    piece <- knight_available_moves(game@board, piece)
+  }
+  if (piece@piece_type == "queen") {
+    piece <- queen_available_moves(game@board, piece)
+  }
+  if (piece@piece_type == "king") {
+    piece <- king_available_moves(game, piece)
+  }
+  return(piece)
 }
 
 check_all_available_moves <- function(game) {

@@ -43,7 +43,6 @@ movepiece <- function(gameId, currentLocation, newLocation) {
         col = which(letters == new_location_list[[1]][1]),
         row = new_location_list[[1]][2] |> as.integer()
     )
-
     modified_game <- move_piece(gameId, current_location_list, new_location_list) |>
         game2json()
     return(modified_game)

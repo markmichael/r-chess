@@ -33,6 +33,7 @@ submit.onclick = () => {
   boardInfoNew.send(JSON.stringify({ gameId, currentLocation, newLocation }))
   // wait for response
   boardInfoNew.onload = () => {
+    console.log(boardInfoNew.response)
     const cols = boardInfoNew.response.board
     console.log(cols)
     for (const col in cols) {
