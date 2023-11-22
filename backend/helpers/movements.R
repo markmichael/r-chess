@@ -34,6 +34,11 @@ move_piece <- function(game_id, current_location, new_location) {
 
 check_move <- function(game, current_location, new_location) {
   print("here i am checking move")
+  print("current location")
+  print(current_location)
+  print("new location")
+  print(new_location)
+  print("pieces")
   print(game@board[[current_location[["col"]]]][[current_location[["row"]]]])
   print(game@board[[new_location[["col"]]]][[new_location[["row"]]]])
   ### check valid move
