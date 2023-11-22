@@ -29,37 +29,30 @@ height: 80px;
 }
 
 .black_pawn {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
-background-color: none;
 background-image: url("./assets/black_pawn.png");
 background-size: contain;
 }
 
 .white_pawn {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
-background-color: none;
 background-image: url("./assets/white_pawn.png");
-background-size: contain;
+background-size: 100%;
 }
 
 .black_knight {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
-background-color: none;
 background-image: url("./assets/black_knight.png");
 background-size: contain;
 }
 
 .white_knight {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
@@ -69,7 +62,6 @@ background-size: contain;
 }
 
 .black_bishop {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
@@ -79,7 +71,6 @@ background-size: contain;
 }
 
 .white_bishop {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
@@ -89,7 +80,6 @@ background-size: contain;
 }
 
 .black_rook {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
@@ -99,7 +89,6 @@ background-size: contain;
 }
 
 .white_rook {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
@@ -109,7 +98,6 @@ background-size: contain;
 }
 
 .black_queen {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
@@ -119,7 +107,6 @@ background-size: contain;
 }
 
 .white_queen {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
@@ -129,7 +116,6 @@ background-size: contain;
 }
 
 .black_king {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
@@ -139,7 +125,6 @@ background-size: contain;
 }
 
 .white_king {
-border: 0;
 width: 80px;
 height: 80px;
 position: absolute;
@@ -150,4 +135,8 @@ background-size: contain;
 
 .highlight {
   background-color: yellow !important;
+}
+.dragging {
+z-index: 1 !important;
+background-color: transparent !important;
 }

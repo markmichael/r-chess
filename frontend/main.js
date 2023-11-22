@@ -43,7 +43,12 @@ document.querySelectorAll('.square').forEach((square) => {
           piece.allowDrop = false
         piece.addEventListener('dragstart', (event) => {
           // datatransfer parent node id
+          event.preventDefault = true
           event.dataTransfer.setData('text/plain', event.target.parentNode.id)
+          event.target.classList.add('dragging')
+        })
+        piece.addEventListener('dragend', (event) => {
+          event.target.classList.remove('dragging')
         })
           document.getElementById(pieceLocation).innerHTML = ''
           document.getElementById(pieceLocation).appendChild(piece)
@@ -75,8 +80,14 @@ boardInfo.onload = () => {
         piece.allowDrop = false
         // register drag event listeners
         piece.addEventListener('dragstart', (event) => {
+          event.preventDefault = true
           // datatransfer parent node id
           event.dataTransfer.setData('text/plain', event.target.parentNode.id)
+          event.target.classList.add('dragging')
+
+        })
+        piece.addEventListener('dragend', (event) => {
+          event.target.classList.remove('dragging')
         })
 
         document.getElementById(pieceLocation).appendChild(piece)

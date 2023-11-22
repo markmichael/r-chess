@@ -6,30 +6,51 @@ move_piece <- function(game_id, current_location, new_location) {
   print(new_location)
   ### retrieve game
   game <- readRDS(paste0("./games/", game_id, ".rds"))
+  game_modified <- game
   ### check valid move
-  if (check_move(game, current_location, new_location)) {
+  if (check_move(game_modified, current_location, new_location)) {
     print("move valid")
     ### check for castling
     print("checking for castling")
-    if (check_for_castle(game, current_location, new_location)) {
-      game <- castle_king(game, current_location, new_location)
+    if (check_for_castle(game_modified, current_location, new_location)) {
+      game_modified <- castle_king(game_modified, current_location, new_location)
     } else { ### standard move/capture
       print("standard move")
       ### update new location with piece
-      game <- update_location_with_piece(game, current_location, new_location)
+      game_modified <- update_location_with_piece(game_modified, current_location, new_location)
       ### convert current location to null_piece
-      game <- convert_to_null(game, current_location)
+      game_modified <- convert_to_null(game_modified, current_location)
+      game_modified <- check_all_available_moves(game_modified)
+    }
+    ### if there was a check, check that it resolved. Also check that no self checks are created
+    if (check_for_checks(game_modified, game_modified@turn)) {
+      print("you cannot end turn in check")
+      saveRDS(game, paste0("./games/", game@id, ".rds"))
+      return(game)
+    } else {
+      print("turn ended without check")
+      game_modified@check <- FALSE
     }
     ### update turn
-    game@turn <- ifelse(game@turn == "white", "black", "white")
+    game_modified@turn <- ifelse(game_modified@turn == "white", "black", "white")
     ### update game
-    game <- check_all_available_moves(game)
+    game_modified <- check_all_available_moves(game_modified)
+    ### check for new check
+    if (check_for_checks(game_modified, game_modified@turn)) {
+      if (check_for_checkmate(game_modified, game_modified@turn)) {
+        print("checkmate!")
+        game_modified@checkmate <- TRUE
+      } else {
+        print("check!")
+        game_modified@check <- TRUE
+      }
+    }
     ### save game
-    saveRDS(game, paste0("./games/", game@id, ".rds"))
+    saveRDS(game_modified, paste0("./games/", game@id, ".rds"))
   } else {
     return(game) # move not valid, return game unchanged
   }
-  return(game)
+  return(game_modified)
 }
 
 check_move <- function(game, current_location, new_location) {
@@ -101,9 +122,11 @@ update_location_with_piece <- function(game, current_location, new_location) {
   print("updating location")
   ### update new location with piece
   game@board[[new_location[[1]]]][[new_location[[2]]]] <- game@board[[current_location[[1]]]][[current_location[[2]]]]
+  print("finished updating new locatoin")
   ### update location of moved piece
-  game@board[[new_location[[1]]]][[new_location[[2]]]]@row <- new_location[[2]]
-  game@board[[new_location[[1]]]][[new_location[[2]]]]@col <- new_location[[1]]
+  game@board[[new_location[[1]]]][[new_location[[2]]]]@row <- new_location[[2]] |> as.integer()
+  game@board[[new_location[[1]]]][[new_location[[2]]]]@col <- new_location[[1]] |> as.integer()
+  print("finished updating location of moved piece")
   ### update moved status of moved piece
   game@board[[new_location[[1]]]][[new_location[[2]]]]@moved <- TRUE
   return(game)

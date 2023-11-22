@@ -29,14 +29,6 @@ king_available_moves <- function(game, piece) {
       piece@col == 5)) {
     print("king is in original location")
     print("evaluate for short castle")
-    print("piece")
-    print(piece)
-    print("piece moved")
-    print(piece@moved)
-    print(board[[piece@col + 1]][[piece@row]]@color)
-    print(board[[piece@col + 2]][[piece@row]]@color)
-    print(board[[piece@col + 3]][[piece@row]]@piece_type)
-    print(board[[piece@col + 3]][[piece@row]]@moved)
     if (piece@moved == FALSE &&
       piece@row %in% c(1, 8) &&
       board[[piece@col + 1]][[piece@row]]@color == "none" &&
@@ -62,15 +54,6 @@ king_available_moves <- function(game, piece) {
     }
     ### check for long castle
     print("evaluate for long castle")
-    print("piece")
-    print(piece)
-    print("piece moved")
-    print(piece@moved)
-    print(board[[piece@col - 1]][[piece@row]]@color)
-    print(board[[piece@col - 2]][[piece@row]]@color)
-    print(board[[piece@col - 3]][[piece@row]]@color)
-    print(board[[piece@col - 4]][[piece@row]]@piece_type)
-    print(!board[[piece@col - 4]][[piece@row]]@moved)
     if (piece@moved == FALSE &&
       piece@row %in% c(1, 8) &&
       board[[piece@col - 1]][[piece@row]]@color == "none" &&
