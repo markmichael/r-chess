@@ -91,11 +91,19 @@
             <div class = "white_square square" id = "h1"></div>
         </div>
     </div>
-    <!-- submit move -->
-    <div id = "submit">
-        <input type = "text" id = "current_location">
-        <input type = "text" id = "new_location">
-        <button id = "submitMove">Submit</button>
+    <!-- add information table -->
+    <div id = "info">
+        <table id = "infoTable">
+            <tr> turn: <td id = "turn"></td></tr>
+            <tr> check: <td id = "check"></td></tr>
+            <tr> checkmate: <td id = "checkmate"></td></tr>
+            <tr> stalemate: <td id = "stalemate"></td></tr>
+        </table>
+    </div>
+    <!-- move history table -->
+    <div id = "history">
+        <table id = "historyTable">
+        </table>
     </div>
     <script src="main.js"></script>
 </body>

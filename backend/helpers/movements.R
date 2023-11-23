@@ -6,6 +6,7 @@ move_piece <- function(game_id, current_location, new_location) {
   print(new_location)
   ### retrieve game
   game <- readRDS(paste0("./games/", game_id, ".rds"))
+  move_string <- paste0(letters[current_location[["col"]]], current_location[["row"]], letters[new_location[["col"]]], new_location[["row"]])
   game_modified <- game
   ### check valid move
   if (check_move(game_modified, current_location, new_location)) {
@@ -33,6 +34,8 @@ move_piece <- function(game_id, current_location, new_location) {
     }
     ### update turn
     game_modified@turn <- ifelse(game_modified@turn == "white", "black", "white")
+    ### add move to history
+    game_modified@moves <- c(game_modified@moves, move_string)
     ### update game
     game_modified <- check_all_available_moves(game_modified)
     ### check for new check
@@ -120,13 +123,18 @@ convert_to_null <- function(game, location) {
 
 update_location_with_piece <- function(game, current_location, new_location) {
   print("updating location")
+  ### check for en passant
+  if (game@board[[current_location[[1]]]][[current_location[[2]]]]@piece_type == "pawn" &&
+      current_location[[1]] != new_location[[1]] &&
+      game@board[[new_location[[2]]]][[new_location[[1]]]]@color == "none") {
+    print("capturing en passant")
+    game <- convert_to_null(game, list(col = new_location[[1]], row = current_location[[2]]))
+      }
   ### update new location with piece
   game@board[[new_location[[1]]]][[new_location[[2]]]] <- game@board[[current_location[[1]]]][[current_location[[2]]]]
-  print("finished updating new locatoin")
   ### update location of moved piece
   game@board[[new_location[[1]]]][[new_location[[2]]]]@row <- new_location[[2]] |> as.integer()
   game@board[[new_location[[1]]]][[new_location[[2]]]]@col <- new_location[[1]] |> as.integer()
-  print("finished updating location of moved piece")
   ### update moved status of moved piece
   game@board[[new_location[[1]]]][[new_location[[2]]]]@moved <- TRUE
   return(game)

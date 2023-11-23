@@ -235,10 +235,10 @@ new_game <- function() {
 check_available_moves <- function(game, piece) {
   piece@available_moves <- list()
   if (piece@piece_type == "pawn" && piece@color == "white") {
-    piece <- white_pawn_available_moves(game@board, piece)
+    piece <- white_pawn_available_moves(game, piece)
   }
   if (piece@piece_type == "pawn" && piece@color == "black") {
-    piece <- black_pawn_available_moves(game@board, piece)
+    piece <- black_pawn_available_moves(game, piece)
   }
   if (piece@piece_type == "rook") {
     piece <- rook_available_moves(game@board, piece)
