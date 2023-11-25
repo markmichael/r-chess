@@ -64,7 +64,19 @@ document.querySelectorAll('.square').forEach((square) => {
   // load checkmate
   const checkmate = document.getElementById('checkmate')
   checkmate.innerHTML = boardInfoNew.response.checkmate
-  }
+  
+    const historyTable = document.getElementById('historyTable')
+    historyTable.innerHTML = ''
+    console.log(boardInfoNew.response)
+    for (const move in boardInfoNew.response.moves) {
+      console.log(move)
+      const row = document.createElement('tr')
+      const cell = document.createElement('td')
+      cell.innerHTML = boardInfoNew.response.moves[move]
+      row.appendChild(cell)
+      historyTable.appendChild(row)
+    }
+    }
   })
 })
 
