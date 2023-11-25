@@ -55,6 +55,15 @@ document.querySelectorAll('.square').forEach((square) => {
         }
       }
     }
+  // load turn
+  const turn = document.getElementById('turn')
+  turn.innerHTML = boardInfoNew.response.turn
+  // load check
+  const check = document.getElementById('check')
+  check.innerHTML = boardInfoNew.response.check
+  // load checkmate
+  const checkmate = document.getElementById('checkmate')
+  checkmate.innerHTML = boardInfoNew.response.checkmate
   }
   })
 })
@@ -94,6 +103,16 @@ boardInfo.onload = () => {
       }
     }
   }
+  // load turn
+  const turn = document.getElementById('turn')
+  turn.innerHTML = boardInfo.response.turn
+  // load check
+  const check = document.getElementById('check')
+  check.innerHTML = boardInfo.response.check
+  // load checkmate
+  const checkmate = document.getElementById('checkmate')
+  checkmate.innerHTML = boardInfo.response.checkmate
+
 }
 
 // post move after clicking submit
