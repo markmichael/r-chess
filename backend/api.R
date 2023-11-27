@@ -32,7 +32,7 @@ newgame <- function() {
 #* @param gameId
 #* @param currentLocation
 #* @param newLocation
-movepiece <- function(gameId, currentLocation, newLocation) {
+movepiece <- function(gameId, currentLocation, newLocation, promotion = "none") {
   ### parse locations
   current_location_list <- strsplit(x = currentLocation, split = "")
   current_location_list <- list(
@@ -44,7 +44,7 @@ movepiece <- function(gameId, currentLocation, newLocation) {
     col = which(letters == new_location_list[[1]][1]),
     row = new_location_list[[1]][2] |> as.integer()
   )
-  modified_game <- move_piece(gameId, current_location_list, new_location_list) |>
+  modified_game <- move_piece(gameId, current_location_list, new_location_list, promotion_string = promotion) |>
     game2json()
   return(modified_game)
 }

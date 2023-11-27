@@ -18,7 +18,6 @@ piece <- setClass("piece",
     col = "integer",
     available_moves = "list",
     piece_type = "character",
-    piece_symbol = "character",
     moved = "logical"
   )
 )

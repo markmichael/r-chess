@@ -60,7 +60,6 @@ new_game <- function() {
         row = 2L,
         col = i,
         piece_type = "pawn",
-        piece_symbol = "p",
         available_moves = list(),
         moved = FALSE
       )
@@ -69,7 +68,6 @@ new_game <- function() {
         row = 7L,
         col = i,
         piece_type = "pawn",
-        piece_symbol = "p",
         available_moves = list(),
         moved = FALSE
       )
@@ -79,7 +77,6 @@ new_game <- function() {
           row = 1L,
           col = i,
           piece_type = "rook",
-          piece_symbol = "r",
           available_moves = list(),
           moved = FALSE
         )
@@ -88,7 +85,6 @@ new_game <- function() {
           row = 8L,
           col = i,
           piece_type = "rook",
-          piece_symbol = "r",
           available_moves = list(),
           moved = FALSE
         )
@@ -101,7 +97,6 @@ new_game <- function() {
           row = 1L,
           col = i,
           piece_type = "knight",
-          piece_symbol = "n",
           available_moves = list(),
           moved = FALSE
         )
@@ -110,7 +105,6 @@ new_game <- function() {
           row = 8L,
           col = i,
           piece_type = "knight",
-          piece_symbol = "n",
           available_moves = list(),
           moved = FALSE
         )
@@ -123,7 +117,6 @@ new_game <- function() {
           row = 1L,
           col = i,
           piece_type = "bishop",
-          piece_symbol = "b",
           available_moves = list(),
           moved = FALSE
         )
@@ -132,7 +125,6 @@ new_game <- function() {
           row = 8L,
           col = i,
           piece_type = "bishop",
-          piece_symbol = "b",
           available_moves = list(),
           moved = FALSE
         )
@@ -145,7 +137,6 @@ new_game <- function() {
           row = 1L,
           col = i,
           piece_type = "queen",
-          piece_symbol = "q",
           available_moves = list(),
           moved = FALSE
         )
@@ -154,7 +145,6 @@ new_game <- function() {
           row = 8L,
           col = i,
           piece_type = "queen",
-          piece_symbol = "q",
           available_moves = list(),
           moved = FALSE
         )
@@ -167,7 +157,6 @@ new_game <- function() {
           row = 1L,
           col = i,
           piece_type = "king",
-          piece_symbol = "k",
           available_moves = list(),
           moved = FALSE
         )
@@ -176,7 +165,6 @@ new_game <- function() {
           row = 8L,
           col = i,
           piece_type = "king",
-          piece_symbol = "k",
           available_moves = list(),
           moved = FALSE
         )
@@ -192,7 +180,6 @@ new_game <- function() {
         row = 3L,
         col = i,
         piece_type = "none",
-        piece_symbol = "",
         available_moves = list(),
         moved = FALSE
       )
@@ -201,7 +188,6 @@ new_game <- function() {
         row = 4L,
         col = i,
         piece_type = "none",
-        piece_symbol = "",
         available_moves = list(),
         moved = FALSE
       )
@@ -210,7 +196,6 @@ new_game <- function() {
         row = 5L,
         col = i,
         piece_type = "none",
-        piece_symbol = "",
         available_moves = list(),
         moved = FALSE
       )
@@ -219,7 +204,6 @@ new_game <- function() {
         row = 6L,
         col = i,
         piece_type = "none",
-        piece_symbol = "",
         available_moves = list(),
         moved = FALSE
       )
@@ -283,7 +267,6 @@ game2json <- function(game) {
           row = piece@row,
           col = letters[piece@col],
           piece_type = piece@piece_type,
-          piece_symbol = piece@piece_symbol,
           available_moves = piece@available_moves,
           moved = piece@moved
         )
@@ -310,7 +293,6 @@ json2game <- function(list_game) {
         row = piece$row,
         col = piece$col,
         piece_type = piece$piece_type,
-        piece_symbol = piece$piece_symbol,
         available_moves = piece$available_moves,
         moved = piece$moved
       ))
