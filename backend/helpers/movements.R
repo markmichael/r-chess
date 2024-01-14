@@ -17,7 +17,7 @@ move_piece <- function(game_id,
   if (check_move(game_modified, current_location, new_location)) {
     print("move valid")
     ### check for promotion
-    if(check_for_promotion(game_modified, current_location, new_location, promotion_string)) {
+    if (check_for_promotion(game_modified, current_location, new_location, promotion_string)) {
       print(paste0("promoting to ", promotion_string))
       game_modified <- promote_pawn(game_modified, current_location, new_location, promotion_string)
     } else if (check_for_castle(game_modified, current_location, new_location)) {
@@ -30,15 +30,18 @@ move_piece <- function(game_id,
       game_modified <- convert_to_null(game_modified, current_location)
       game_modified <- check_all_available_moves(game_modified)
     }
+    ### with change, the need to check that you are out of checks should be eliminated so check can always be reset to false
+    game_modified@check <- FALSE
     ### if there was a check, check that it resolved. Also check that no self checks are created
-    if (check_for_checks(game_modified, game_modified@turn)) {
-      print("you cannot end turn in check")
-      saveRDS(game, paste0("./games/", game@id, ".rds"))
-      return(game)
-    } else {
-      print("turn ended without check")
-      game_modified@check <- FALSE
-    }
+
+    # if (check_for_checks(game_modified, game_modified@turn)) {
+    #   print("you cannot end turn in check")
+    #   saveRDS(game, paste0("./games/", game@id, ".rds"))
+    #   return(game)
+    # } else {
+    #   print("turn ended without check")
+    #   game_modified@check <- FALSE
+    # }
     ### update turn
     game_modified@turn <- ifelse(game_modified@turn == "white", "black", "white")
     ### add move to history

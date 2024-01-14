@@ -41,7 +41,6 @@ check_for_checkmate <- function(game, color) {
         game_modified <- update_location_with_piece(game, current_location, y)
         game_modified <- convert_to_null(game_modified, current_location)
         game_modified <- check_all_available_moves(game_modified)
-        ### TODO: en passant
         print("turn")
         print(game_modified@turn)
         if (check_for_checks(game_modified, game_modified@turn)) {
@@ -83,4 +82,21 @@ is_position_attacked <- function(game, test_square) {
     })
   )
   return(result)
+}
+
+eliminate_self_checks <- function(game, piece) {
+## cycle through piece's available moves
+  print(piece)
+piece@available_moves <- lapply(piece@available_moves, function(move) {
+print(move)
+  game_modified <- update_location_with_piece(game, list(col = piece@col, row = piece@row), move)
+  game_modified <- convert_to_null(game_modified, list(col = piece@col, row = piece@row))
+  game_modified <- check_all_available_moves(game_modified)
+  if (check_for_checks(game_modified, game_modified@turn)) {
+    return(NULL)
+  } else {
+    return(move)
+  }
+})
+return(piece)
 }

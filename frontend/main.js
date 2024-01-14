@@ -13,13 +13,17 @@ document.querySelectorAll('.square').forEach((square) => {
     square.classList.remove('highlight')
     console.log(event.dataTransfer.getData('text/plain'))
     console.log(event.target.id)
-    console.log(event)
 
   const gameId = boardInfo.response.id
   const currentLocation = event.dataTransfer.getData('text/plain')
     // get new location square. if id is undefined, get parent id
   const newLocation = event.target.id || event.target.parentNode.id
     console.log(newLocation)
+    // check if current location in board info is a pawn and new location is row 1 or 8
+    console.log("checking for pawn promotion")
+  if (boardInfo.response.board[currentLocation[0]][currentLocation[1]-1].piece_type[0] === 'pawn' && (newLocation[1] === '1' || newLocation[1] === '8')) {
+    console.log('pawn promotion')
+  }
   const boardInfoNew = new XMLHttpRequest()
   boardInfoNew.responseType = 'json'
   boardInfoNew.open('POST', 'http://localhost:8001/movepiece', true)

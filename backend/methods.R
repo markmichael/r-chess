@@ -239,6 +239,9 @@ check_available_moves <- function(game, piece) {
   if (piece@piece_type == "king") {
     piece <- king_available_moves(game, piece)
   }
+  ### eliminate self-check moves
+  # piece <- eliminate_self_checks(game, piece)
+  piece@available_moves <- Filter(Negate(is.null), piece@available_moves)
   return(piece)
 }
 
