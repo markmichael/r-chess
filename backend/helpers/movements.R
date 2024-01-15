@@ -131,6 +131,12 @@ convert_to_null <- function(game, location) {
 update_location_with_piece <- function(game, current_location, new_location) {
   print("updating location")
   ### check for en passant
+  print("checking for en passant")
+  print(current_location)
+  print(new_location)
+  print(game@board[[current_location[[1]]]][[current_location[[2]]]]@piece_type)
+  print(game@board[[new_location[[2]]]][[new_location[[1]]]]@color)
+
   if (game@board[[current_location[[1]]]][[current_location[[2]]]]@piece_type == "pawn" &&
     current_location[[1]] != new_location[[1]] &&
     game@board[[new_location[[2]]]][[new_location[[1]]]]@color == "none") {

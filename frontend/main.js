@@ -13,19 +13,20 @@ document.querySelectorAll('.square').forEach((square) => {
     square.classList.remove('highlight')
 
   const gameId = boardInfoNew.response.id
-  const currentLocation = event.dataTransfer.getData('text/plain')
+  const currentLocation = event.dataTransfer.getData('idtext')
+  const pieceColor = event.dataTransfer.getData('classtext').split('_')[0]
+  const pieceType = event.dataTransfer.getData('classtext').split('_')[1]
     // get new location square. if id is undefined, get parent id
   const newLocation = event.target.id || event.target.parentNode.id
     // check if current location in board info is a pawn and new location is row 1 or 8
     console.log("checking for pawn promotion")
-    console.log(boardInfoNew.response.board[currentLocation[0]][currentLocation[1]-1].piece_type[0])
-  if (boardInfoNew.response.board[currentLocation[0]][currentLocation[1]-1].piece_type[0] === 'pawn' && (newLocation[1] === '1' || newLocation[1] === '8')) {
+  if (pieceType === 'pawn' && (newLocation[1] === '1' || newLocation[1] === '8')) {
     console.log('pawn promotion')
     // show promotion modal
     document.getElementById('promotion').style.display = 'block'
     document.getElementById('promotionTable').style.display = 'block'
     // check for color and show that row of the promotion table
-    if (boardInfoNew.response.board[currentLocation[0]][currentLocation[1]-1].color[0] === 'white') {
+    if (pieceColor === 'white') {
       document.getElementById('white').style.display = 'block'
       document.getElementById('black').style.display = 'none'
     } else {
@@ -73,7 +74,13 @@ function submitMoveRefreshBoard(gameId, currentLocation, newLocation, promotion 
         piece.addEventListener('dragstart', (event) => {
           // datatransfer parent node id
           event.preventDefault = true
-          event.dataTransfer.setData('text/plain', event.target.parentNode.id)
+          // set data to be parentnode id and piece type
+          console.log("dragstart")
+          event.dataTransfer.setData('idtext', event.target.parentNode.id)
+          console.log(event.target)
+          event.dataTransfer.setData('classtext', event.target.classList[0])
+          console.log(event.dataTransfer.getData('idtext'))
+          console.log(event.dataTransfer.getData('classtext'))
           event.target.classList.add('dragging')
         })
         piece.addEventListener('dragend', (event) => {
@@ -96,15 +103,14 @@ function submitMoveRefreshBoard(gameId, currentLocation, newLocation, promotion 
   
     const historyTable = document.getElementById('historyTable')
     historyTable.innerHTML = ''
-    console.log(boardInfoNew.response)
     for (const move in boardInfoNew.response.moves) {
-      console.log(move)
       const row = document.createElement('tr')
       const cell = document.createElement('td')
       cell.innerHTML = boardInfoNew.response.moves[move]
       row.appendChild(cell)
       historyTable.appendChild(row)
     }
+    return boardInfoNew
     }
   return boardInfoNew
   }
@@ -133,7 +139,7 @@ boardInfoNew.onload = () => {
         piece.addEventListener('dragstart', (event) => {
           event.preventDefault = true
           // datatransfer parent node id
-          event.dataTransfer.setData('text/plain', event.target.parentNode.id)
+          event.dataTransfer.setData('idtext', event.target.parentNode.id)
           event.target.classList.add('dragging')
 
         })
