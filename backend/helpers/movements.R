@@ -34,14 +34,14 @@ move_piece <- function(game_id,
     game_modified@check <- FALSE
     ### if there was a check, check that it resolved. Also check that no self checks are created
 
-    # if (check_for_checks(game_modified, game_modified@turn)) {
-    #   print("you cannot end turn in check")
-    #   saveRDS(game, paste0("./games/", game@id, ".rds"))
-    #   return(game)
-    # } else {
-    #   print("turn ended without check")
-    #   game_modified@check <- FALSE
-    # }
+    if (check_for_checks(game_modified, game_modified@turn)) {
+      print("you cannot end turn in check")
+      saveRDS(game, paste0("./games/", game@id, ".rds"))
+      return(game)
+    } else {
+      print("turn ended without check")
+      game_modified@check <- FALSE
+    }
     ### update turn
     game_modified@turn <- ifelse(game_modified@turn == "white", "black", "white")
     ### add move to history
@@ -73,9 +73,6 @@ check_move <- function(game, current_location, new_location) {
   print(current_location)
   print("new location")
   print(new_location)
-  print("pieces")
-  print(game@board[[current_location[["col"]]]][[current_location[["row"]]]])
-  print(game@board[[new_location[["col"]]]][[new_location[["row"]]]])
   ### check valid move
   if (any(list(new_location) %in% game@board[[current_location[["col"]]]][[current_location[["row"]]]]@available_moves) &&
     game@board[[current_location[["col"]]]][[current_location[["row"]]]]@color == game@turn) {

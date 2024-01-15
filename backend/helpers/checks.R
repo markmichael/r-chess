@@ -32,7 +32,6 @@ check_for_checkmate <- function(game, color) {
   board <- unlist(game@board, recursive = FALSE)
   print("board")
   result <- !any(lapply(board, function(x, game) {
-                          print(x)
     if (x@color == color) {
       any(lapply(x@available_moves, function(y, game, current_location) {
         print("is this error")
@@ -61,9 +60,7 @@ check_for_checkmate <- function(game, color) {
 
 is_position_attacked <- function(game, test_square) {
   print("here is my test square")
-  print(test_square)
   print("here is my game turn")
-  print(game@turn)
   board <- game@board
   result <- any(
     lapply(board, function(column) {
@@ -86,9 +83,7 @@ is_position_attacked <- function(game, test_square) {
 
 eliminate_self_checks <- function(game, piece) {
 ## cycle through piece's available moves
-  print(piece)
 piece@available_moves <- lapply(piece@available_moves, function(move) {
-print(move)
   game_modified <- update_location_with_piece(game, list(col = piece@col, row = piece@row), move)
   game_modified <- convert_to_null(game_modified, list(col = piece@col, row = piece@row))
   game_modified <- check_all_available_moves(game_modified)

@@ -139,6 +139,14 @@ background-size: contain;
   height: 60px;
 }
 
+#promotion {
+display: none;
+}
+
+#promotionTable > tr {
+display: none;
+}
+
 #white > #queen
 {
   background-image: url("./assets/white_queen.png");
