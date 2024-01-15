@@ -31,7 +31,6 @@ move_piece <- function(game_id,
       game_modified <- check_all_available_moves(game_modified)
     }
     ### with change, the need to check that you are out of checks should be eliminated so check can always be reset to false
-    game_modified@check <- FALSE
     ### if there was a check, check that it resolved. Also check that no self checks are created
 
     if (check_for_checks(game_modified, game_modified@turn)) {
@@ -135,11 +134,13 @@ update_location_with_piece <- function(game, current_location, new_location) {
   print(current_location)
   print(new_location)
   print(game@board[[current_location[[1]]]][[current_location[[2]]]]@piece_type)
-  print(game@board[[new_location[[2]]]][[new_location[[1]]]]@color)
+  print("en passant destination square:")
+  print(game@board[[new_location[[2]]]][[new_location[[1]]]])
+
 
   if (game@board[[current_location[[1]]]][[current_location[[2]]]]@piece_type == "pawn" &&
     current_location[[1]] != new_location[[1]] &&
-    game@board[[new_location[[2]]]][[new_location[[1]]]]@color == "none") {
+    game@board[[new_location[[1]]]][[new_location[[2]]]]@color == "none") {
     print("capturing en passant")
     game <- convert_to_null(game, list(col = new_location[[1]], row = current_location[[2]]))
   }
